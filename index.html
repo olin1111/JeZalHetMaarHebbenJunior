@@ -29,14 +29,14 @@
 
         /* Rainbow theme for screen 4 */
         body.rainbow {
-            background: linear-gradient(135deg, 
-                #ff6b6b 0%, 
-                #ffa500 15%, 
-                #ffed4e 30%, 
-                #4ecdc4 45%, 
-                #45b7d1 60%, 
-                #96ceb4 75%, 
-                #dda0dd 90%, 
+            background: linear-gradient(135deg,
+                #ff6b6b 0%,
+                #ffa500 15%,
+                #ffed4e 30%,
+                #4ecdc4 45%,
+                #45b7d1 60%,
+                #96ceb4 75%,
+                #dda0dd 90%,
                 #ff6b9d 100%);
             background-size: 400% 400%;
             animation: rainbowFlow 12s ease-in-out infinite;
@@ -212,11 +212,11 @@
         }
 
         .rainbow .cta-button {
-            background: linear-gradient(135deg, 
-                #ff6b6b 0%, 
-                #ffa500 25%, 
-                #4ecdc4 50%, 
-                #45b7d1 75%, 
+            background: linear-gradient(135deg,
+                #ff6b6b 0%,
+                #ffa500 25%,
+                #4ecdc4 50%,
+                #45b7d1 75%,
                 #96ceb4 100%);
             background-size: 300% 300%;
             color: white;
@@ -378,9 +378,7 @@
         <div class="gratitude-text" id="childIntro"></div>
         <div class="quote" id="randomQuote"></div>
         <div class="child-name" id="childName"></div>
-        <div class="gratitude-text">
-            Benieuwd waar zij haar positiviteit vandaan haalt en hoe zij haar leven leidt?, druk dan op de link
-        </div>
+        <div class="gratitude-text" id="genderText"></div>
         <button class="cta-button" id="childLink">Bekijk het verhaal</button>
     </div>
 
@@ -408,81 +406,97 @@
         const children = [
             {
                 name: "Lilou (13)",
+                gender: "female",
                 quote: "Ik kan vandaag niet lopen, maar ik heb toch de zon op mijn gezicht gevoeld.",
                 link: "https://www.zapp.nl/programmas/je-zal-het-maar-hebben-junior/gemist/BV_101410838"
             },
             {
                 name: "An-Mei (14)",
+                gender: "female",
                 quote: "Ik zie niet alles, en toch voelde ik vandaag licht en vreugde in mijn omgeving. Ik heb kunnen genieten van kleuren en vormen om me heen.",
                 link: "https://www.zapp.nl/programmas/je-zal-het-maar-hebben-junior/gemist/BV_101412198"
             },
             {
                 name: "Jadey (9)",
+                gender: "female",
                 quote: "Mijn gezicht laat mijn emoties niet zien, maar vandaag voelde ik geluk in mijn hart.",
                 link: "https://www.zapp.nl/programmas/je-zal-het-maar-hebben-junior/gemist/BV_101412198"
             },
             {
                 name: "Emma (13)",
+                gender: "female",
                 quote: "Mijn gezicht en lichaam zijn anders dan die van anderen, maar dat stopt me niet om te genieten van mijn hobby make-up!",
                 link: "https://www.zapp.nl/programmas/je-zal-het-maar-hebben-junior/gemist/BV_101412202"
             },
             {
                 name: "Rocco (12)",
+                gender: "male",
                 quote: "Ik moet extra opletten met mijn lichaam, maar vandaag heb ik vrij en blij kunnen zijn.",
                 link: "https://www.zapp.nl/programmas/je-zal-het-maar-hebben-junior/gemist/BV_101412202"
             },
             {
                 name: "Sofie (15)",
+                gender: "female",
                 quote: "Water kan me pijn doen, maar vandaag voelde ik plezier en rust in andere momenten.",
                 link: "https://www.zapp.nl/programmas/je-zal-het-maar-hebben-junior/gemist/BV_101412201"
             },
             {
                 name: "Wansh (11)",
+                gender: "male",
                 quote: "Ik moet altijd letten op mijn suiker, maar vandaag voelde ik me vrij in wat ik wilde doen.",
                 link: "https://www.zapp.nl/programmas/je-zal-het-maar-hebben-junior/gemist/BV_101412201"
             },
             {
                 name: "Sophia (10)",
+                gender: "female",
                 quote: "Ik moet voorzichtig zijn met prikkels, want mijn lichaam kan onvoorspelbaar zijn. Toch heb ik vandaag gelachen en genoten.",
                 link: "https://www.zapp.nl/programmas/je-zal-het-maar-hebben-junior/gemist/BV_101412200"
             },
             {
                 name: "Loran (13)",
+                gender: "male",
                 quote: "Ik kan niet alles fysiek doen, en toch genoot ik van elke beweging die ik wél kon maken.",
                 link: "https://www.zapp.nl/programmas/je-zal-het-maar-hebben-junior/gemist/BV_101412200"
             },
             {
                 name: "Lennon (9)",
+                gender: "male",
                 quote: "Het is soms moeilijk om op te vallen omdat mijn gezicht anders is, maar vandaag voelde ik me goed in wie ik ben.",
                 link: "https://www.zapp.nl/programmas/je-zal-het-maar-hebben-junior/gemist/BV_101412199"
             },
             {
                 name: "Lieve (14)",
+                gender: "female",
                 quote: "Mijn spieren zijn slapper en ik heb altijd honger, daardoor is het lastig om alles te doen wat ik wil. Vandaag kon ik toch lachen en spelen.",
                 link: "https://www.zapp.nl/programmas/je-zal-het-maar-hebben-junior/gemist/BV_101412199"
             },
             {
                 name: "Jasper (13)",
+                gender: "male",
                 quote: "Het geluid in mijn hoofd stopt niet, en toch heb ik kunnen glimlachen vandaag.",
                 link: "https://www.zapp.nl/programmas/je-zal-het-maar-hebben-junior/gemist/BV_101410838"
             },
             {
                 name: "Wieke (12)",
+                gender: "female",
                 quote: "Mijn lichaam voelt soms verkeerd, maar toch heb ik vandaag trots kunnen lachen.",
                 link: "https://www.zapp.nl/programmas/je-zal-het-maar-hebben-junior/gemist/BV_101412204"
             },
             {
                 name: "Jurre (11)",
+                gender: "male",
                 quote: "Het is niet makkelijk voor mijn handen en voeten, en toch heb ik plezier kunnen maken zoals ik wil.",
                 link: "https://www.zapp.nl/programmas/je-zal-het-maar-hebben-junior/gemist/BV_101412204"
             },
             {
                 name: "Sara (9)",
+                gender: "female",
                 quote: "Mijn spieren zijn slapper dan anderen, maar ik heb vandaag kunnen lachen en genieten zoals iedereen.",
                 link: "https://www.zapp.nl/programmas/je-zal-het-maar-hebben-junior/gemist/BV_101412203"
             },
             {
                 name: "Ilano (8)",
+                gender: "male",
                 quote: "Ik kan niet zomaar naar buiten in de zon, maar vandaag heb ik toch de warmte van het licht op een veilige manier gevoeld.",
                 link: "https://www.zapp.nl/programmas/je-zal-het-maar-hebben-junior/gemist/BV_101412203"
             }
@@ -504,7 +518,14 @@
             document.getElementById('childIntro').textContent = `Kijk maar bijvoorbeeld wat ${selectedChild.name.split(' ')[0]} zegt:`;
             document.getElementById('randomQuote').textContent = `"${selectedChild.quote}"`;
             document.getElementById('childName').textContent = selectedChild.name;
+           
+            // Set gender-appropriate text
+            const genderText = selectedChild.gender === "female" 
+                ? "Benieuwd waar zij haar positiviteit vandaan haalt en hoe zij haar leven leidt? Druk dan op de knop hieronder."
+                : "Benieuwd waar hij zijn positiviteit vandaan haalt en hoe hij zijn leven leidt? Druk dan op de knop hieronder.";
             
+            document.getElementById('genderText').textContent = genderText;
+           
             // Set up the link
             const linkButton = document.getElementById('childLink');
             linkButton.onclick = () => window.open(selectedChild.link, '_blank');
@@ -512,7 +533,7 @@
 
         function submitComplaint() {
             const complaint = document.getElementById('complaintInput').value.trim();
-            
+           
             if (!complaint) {
                 alert('Typ eerst iets!');
                 return;
@@ -523,10 +544,10 @@
 
             // Show user's complaint in floating screen
             document.getElementById('userComplaint').textContent = `"${complaint}"`;
-            
+           
             // Switch to floating screen
             showScreen('screen2');
-            
+           
             // After 3 seconds, show other person's complaint
             setTimeout(() => {
                 showScreen('screen3');
@@ -539,7 +560,7 @@
                 document.body.classList.remove('dark');
                 document.body.classList.add('rainbow');
             }, 200);
-            
+           
             showScreen('screen4');
         }
 
@@ -555,7 +576,7 @@
                     }
                 }, 300);
             });
-            
+           
             // Show target screen with delay for smooth transition
             setTimeout(() => {
                 document.getElementById(screenId).style.display = 'block';
