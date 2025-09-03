@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="nl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Share Your Complaint</title>
+    <title>Deel Je Zorgen</title>
     <style>
         * {
             margin: 0;
@@ -12,13 +12,43 @@
         }
 
         body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Arial', sans-serif;
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
+            position: relative;
+            transition: all 1s ease;
+        }
+
+        /* Dark theme for screens 1-3 */
+        body.dark {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: #a0a0a0;
+        }
+
+        /* Rainbow theme for screen 4 */
+        body.rainbow {
+            background: linear-gradient(135deg, 
+                #ff6b6b 0%, 
+                #ffa500 15%, 
+                #ffed4e 30%, 
+                #4ecdc4 45%, 
+                #45b7d1 60%, 
+                #96ceb4 75%, 
+                #dda0dd 90%, 
+                #ff6b9d 100%);
+            animation: rainbowShift 8s ease-in-out infinite;
+            color: #2c3e50;
+        }
+
+        @keyframes rainbowShift {
+            0%, 100% {
+                filter: hue-rotate(0deg) brightness(1);
+            }
+            50% {
+                filter: hue-rotate(30deg) brightness(1.1);
+            }
         }
 
         .screen {
@@ -26,14 +56,124 @@
             text-align: center;
             max-width: 400px;
             padding: 40px 20px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            border-radius: 25px;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            transition: all 0.5s ease;
         }
 
         .screen.active {
             display: block;
+        }
+
+        /* Dark theme styling for screens 1-3 */
+        .dark .screen {
+            background: rgba(30, 30, 60, 0.8);
+            border: 1px solid rgba(100, 100, 120, 0.3);
+        }
+
+        .dark h1 {
+            color: #8a8a8a;
+        }
+
+        .dark textarea {
+            background: rgba(40, 40, 60, 0.9);
+            color: #c0c0c0;
+            border: 2px solid rgba(80, 80, 100, 0.5);
+        }
+
+        .dark textarea:focus {
+            border-color: #5a5a7a;
+            background: rgba(50, 50, 70, 0.9);
+        }
+
+        .dark button {
+            background: linear-gradient(135deg, #4a4a6a 0%, #5a5a7a 100%);
+            color: #d0d0d0;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+        }
+
+        .dark button:hover {
+            background: linear-gradient(135deg, #5a5a7a 0%, #6a6a8a 100%);
+        }
+
+        .dark .floating-text {
+            background: rgba(50, 50, 70, 0.7);
+            color: #b0b0b0;
+            border: 1px solid rgba(80, 80, 100, 0.3);
+        }
+
+        .dark .complaint-text {
+            background: rgba(50, 50, 70, 0.7);
+            color: #b0b0b0;
+            border: 1px solid rgba(80, 80, 100, 0.3);
+        }
+
+        .dark .disclaimer {
+            background: rgba(40, 40, 60, 0.8);
+            color: #909090;
+        }
+
+        .dark .not-alone-text {
+            color: #a0a0a0;
+        }
+
+        /* Rainbow theme styling for screen 4 */
+        .rainbow .screen {
+            background: rgba(255, 255, 255, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 10px 40px rgba(255, 255, 255, 0.2);
+        }
+
+        .rainbow h1 {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #dda0dd);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: bold;
+        }
+
+        .rainbow .gratitude-text {
+            color: #2c3e50;
+        }
+
+        .rainbow .quote {
+            background: rgba(255, 255, 255, 0.7);
+            color: #2c3e50;
+            border-left: 4px solid;
+            border-image: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1) 1;
+        }
+
+        .rainbow .cta-button {
+            background: linear-gradient(135deg, 
+                #ff6b6b 0%, 
+                #ffa500 25%, 
+                #4ecdc4 50%, 
+                #45b7d1 75%, 
+                #96ceb4 100%);
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 6px 25px rgba(255, 107, 107, 0.4);
+            animation: buttonGlow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes buttonGlow {
+            from {
+                box-shadow: 0 6px 25px rgba(255, 107, 107, 0.4);
+            }
+            to {
+                box-shadow: 0 8px 35px rgba(78, 205, 196, 0.6);
+            }
+        }
+
+        .rainbow .cta-button:hover {
+            transform: translateY(-3px);
+            background: linear-gradient(135deg, 
+                #ff5252 0%, 
+                #ff8f00 25%, 
+                #26c6da 50%, 
+                #42a5f5 75%, 
+                #66bb6a 100%);
         }
 
         h1 {
@@ -47,16 +187,16 @@
             height: 120px;
             padding: 15px;
             border: none;
-            border-radius: 10px;
+            border-radius: 15px;
             font-size: 16px;
             resize: none;
-            background: rgba(255, 255, 255, 0.9);
-            color: #333;
+        }
+
+        textarea:focus {
+            outline: none;
         }
 
         button {
-            background: #ff6b6b;
-            color: white;
             border: none;
             padding: 15px 30px;
             border-radius: 25px;
@@ -66,11 +206,6 @@
             transition: all 0.3s ease;
         }
 
-        button:hover {
-            background: #ff5252;
-            transform: translateY(-2px);
-        }
-
         .floating-text {
             font-size: 18px;
             opacity: 1;
@@ -78,31 +213,29 @@
             animation: floatAway 3s ease-out forwards;
             margin: 20px 0;
             padding: 20px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 15px;
+            border-radius: 20px;
         }
 
         @keyframes floatAway {
             0% {
                 opacity: 1;
-                transform: translateY(0) scale(1);
+                transform: translateY(0) scale(1) rotate(0deg);
             }
             50% {
-                opacity: 0.7;
-                transform: translateY(-20px) scale(1.1);
+                opacity: 0.8;
+                transform: translateY(-30px) scale(1.05) rotate(2deg);
             }
             100% {
                 opacity: 0;
-                transform: translateY(-100px) scale(0.8);
+                transform: translateY(-120px) scale(0.7) rotate(5deg);
             }
         }
 
         .complaint-text {
-            font-size: 18px;
+            font-size: 16px;
             margin: 20px 0;
             padding: 20px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 15px;
+            border-radius: 20px;
             font-style: italic;
         }
 
@@ -113,58 +246,75 @@
         }
 
         .quote {
-            font-size: 20px;
+            font-size: 18px;
             font-weight: bold;
-            color: #ffd700;
-            margin: 15px 0;
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 15px;
         }
 
         .cta-button {
-            background: #4ecdc4;
             margin-top: 25px;
+            font-weight: 500;
         }
 
-        .cta-button:hover {
-            background: #45b7b8;
+        .disclaimer {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            font-size: 11px;
+            padding: 8px 12px;
+            border-radius: 10px;
+            max-width: 200px;
+            text-align: left;
+            line-height: 1.3;
+        }
+
+        .not-alone-text {
+            margin-top: 15px;
+            font-size: 14px;
+            font-weight: 500;
         }
     </style>
 </head>
-<body>
+<body class="dark">
     <!-- Screen 1: Input -->
     <div class="screen active" id="screen1">
-        <h1>Type your complaint here</h1>
-        <textarea id="complaintInput" placeholder="What's bothering you right now?"></textarea>
-        <button onclick="submitComplaint()">Send it away</button>
+        <h1>Waar zit je mee vandaag?</h1>
+        <textarea id="complaintInput" placeholder=""></textarea>
+        <button onclick="submitComplaint()">Verstuur</button>
+        <div class="disclaimer">
+            Disclaimer: er wordt niks met je antwoord gedaan, de reactie die je later krijgt, is al eerder opgehaald.
+        </div>
     </div>
 
     <!-- Screen 2: Floating away -->
     <div class="screen" id="screen2">
-        <h1>Your complaint is floating away...</h1>
+        <h1>Zo, je zorgen worden lichter en dansen weg!</h1>
         <div class="floating-text" id="userComplaint"></div>
     </div>
 
     <!-- Screen 3: Someone else's complaint -->
     <div class="screen" id="screen3">
-        <h1>Here's what someone else shared</h1>
+        <h1>Hier zat iemand anders mee vandaag</h1>
         <div class="complaint-text">
-            "I'm so tired of everything being so expensive. I can barely afford groceries anymore and it's making me feel hopeless about the future."
+            "Pfff ik ben vandaag te laat gekomen op werk, weer door een vertraging van de treinen"
         </div>
-        <button onclick="showGratitude()">Continue</button>
+        <div class="not-alone-text">Je bent niet alleen zoals je ziet.</div>
+        <button onclick="showGratitude()">Doorgaan</button>
     </div>
 
     <!-- Screen 4: Gratitude message -->
     <div class="screen" id="screen4">
-        <h1>But there is also so much to be grateful for</h1>
+        <h1>En toch is er ook zo veel om dankbaar voor te zijn</h1>
         <div class="gratitude-text">
-            Look at this quote Rocco said:
+            Kijk maar bijvoorbeeld wat Lilou zegt:
         </div>
-        <div class="quote">"At least you can dance"</div>
+        <div class="quote">"Ik kan vandaag niet lopen, maar ik heb toch de zon op mijn gezicht gevoeld."</div>
         <div class="gratitude-text">
-            To hear his full story, watch the program
+            Benieuwd waar zij haar positiviteit vandaan haalt en hoe zij haar leven leidt?, druk dan op de link
         </div>
-        <button class="cta-button" onclick="restart()">Watch Program</button>
-        <br>
-        <button onclick="restart()" style="background: rgba(255,255,255,0.3); margin-top: 15px;">Start Over</button>
+        <button class="cta-button" onclick="window.open('https://www.zapp.nl/programmas/je-zal-het-maar-hebben-junior/gemist/BV_101410838', '_blank')">Bekijk Lilou's verhaal</button>
     </div>
 
     <script>
@@ -172,7 +322,7 @@
             const complaint = document.getElementById('complaintInput').value.trim();
             
             if (!complaint) {
-                alert('Please type something first!');
+                alert('Typ eerst iets!');
                 return;
             }
 
@@ -189,13 +339,11 @@
         }
 
         function showGratitude() {
+            // Change to rainbow theme
+            document.body.classList.remove('dark');
+            document.body.classList.add('rainbow');
+            
             showScreen('screen4');
-        }
-
-        function restart() {
-            // Clear input
-            document.getElementById('complaintInput').value = '';
-            showScreen('screen1');
         }
 
         function showScreen(screenId) {
