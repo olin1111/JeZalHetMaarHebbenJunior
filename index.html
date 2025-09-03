@@ -18,7 +18,7 @@
             align-items: center;
             justify-content: center;
             position: relative;
-            transition: all 1s ease;
+            transition: all 3s ease;
         }
 
         /* Dark theme for screens 1-3 */
@@ -38,16 +38,27 @@
                 #96ceb4 75%, 
                 #dda0dd 90%, 
                 #ff6b9d 100%);
-            animation: rainbowShift 8s ease-in-out infinite;
+            background-size: 400% 400%;
+            animation: rainbowFlow 12s ease-in-out infinite;
             color: #2c3e50;
         }
 
-        @keyframes rainbowShift {
+        @keyframes rainbowFlow {
             0%, 100% {
+                background-position: 0% 50%;
                 filter: hue-rotate(0deg) brightness(1);
             }
+            25% {
+                background-position: 100% 0%;
+                filter: hue-rotate(20deg) brightness(1.05);
+            }
             50% {
-                filter: hue-rotate(30deg) brightness(1.1);
+                background-position: 100% 100%;
+                filter: hue-rotate(40deg) brightness(1.1);
+            }
+            75% {
+                background-position: 0% 100%;
+                filter: hue-rotate(20deg) brightness(1.05);
             }
         }
 
@@ -59,11 +70,27 @@
             border-radius: 25px;
             backdrop-filter: blur(15px);
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-            transition: all 0.5s ease;
+            transition: all 2s ease;
+            opacity: 0;
+            transform: translateY(20px);
         }
 
         .screen.active {
             display: block;
+            opacity: 1;
+            transform: translateY(0);
+            animation: screenFadeIn 1s ease-out;
+        }
+
+        @keyframes screenFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
         }
 
         /* Dark theme styling for screens 1-3 */
@@ -123,6 +150,16 @@
             background: rgba(255, 255, 255, 0.25);
             border: 1px solid rgba(255, 255, 255, 0.4);
             box-shadow: 0 10px 40px rgba(255, 255, 255, 0.2);
+            animation: screenRainbowGlow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes screenRainbowGlow {
+            from {
+                box-shadow: 0 10px 40px rgba(255, 107, 107, 0.3);
+            }
+            to {
+                box-shadow: 0 15px 50px rgba(78, 205, 196, 0.4);
+            }
         }
 
         .rainbow h1 {
@@ -131,10 +168,30 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
             font-weight: bold;
+            animation: titleShimmer 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes titleShimmer {
+            from {
+                filter: brightness(1);
+            }
+            to {
+                filter: brightness(1.2);
+            }
         }
 
         .rainbow .gratitude-text {
             color: #2c3e50;
+            animation: textGlow 4s ease-in-out infinite;
+        }
+
+        @keyframes textGlow {
+            0%, 100% {
+                text-shadow: 0 0 5px rgba(44, 62, 80, 0.3);
+            }
+            50% {
+                text-shadow: 0 0 15px rgba(78, 205, 196, 0.6);
+            }
         }
 
         .rainbow .quote {
@@ -142,6 +199,16 @@
             color: #2c3e50;
             border-left: 4px solid;
             border-image: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1) 1;
+            animation: quoteFloat 6s ease-in-out infinite;
+        }
+
+        @keyframes quoteFloat {
+            0%, 100% {
+                transform: translateY(0) scale(1);
+            }
+            50% {
+                transform: translateY(-5px) scale(1.02);
+            }
         }
 
         .rainbow .cta-button {
@@ -151,29 +218,26 @@
                 #4ecdc4 50%, 
                 #45b7d1 75%, 
                 #96ceb4 100%);
+            background-size: 300% 300%;
             color: white;
             font-weight: bold;
-            box-shadow: 0 6px 25px rgba(255, 107, 107, 0.4);
-            animation: buttonGlow 2s ease-in-out infinite alternate;
+            animation: buttonRainbowFlow 3s ease-in-out infinite;
         }
 
-        @keyframes buttonGlow {
-            from {
+        @keyframes buttonRainbowFlow {
+            0%, 100% {
+                background-position: 0% 50%;
                 box-shadow: 0 6px 25px rgba(255, 107, 107, 0.4);
             }
-            to {
+            50% {
+                background-position: 100% 50%;
                 box-shadow: 0 8px 35px rgba(78, 205, 196, 0.6);
             }
         }
 
         .rainbow .cta-button:hover {
-            transform: translateY(-3px);
-            background: linear-gradient(135deg, 
-                #ff5252 0%, 
-                #ff8f00 25%, 
-                #26c6da 50%, 
-                #42a5f5 75%, 
-                #66bb6a 100%);
+            transform: translateY(-3px) scale(1.05);
+            animation-duration: 1s;
         }
 
         h1 {
@@ -275,6 +339,12 @@
             font-size: 14px;
             font-weight: 500;
         }
+
+        .child-name {
+            font-size: 14px;
+            margin-top: 10px;
+            opacity: 0.8;
+        }
     </style>
 </head>
 <body class="dark">
@@ -297,9 +367,7 @@
     <!-- Screen 3: Someone else's complaint -->
     <div class="screen" id="screen3">
         <h1>Hier zat iemand anders mee vandaag</h1>
-        <div class="complaint-text">
-            "Pfff ik ben vandaag te laat gekomen op werk, weer door een vertraging van de treinen"
-        </div>
+        <div class="complaint-text" id="randomComplaint"></div>
         <div class="not-alone-text">Je bent niet alleen zoals je ziet.</div>
         <button onclick="showGratitude()">Doorgaan</button>
     </div>
@@ -307,17 +375,141 @@
     <!-- Screen 4: Gratitude message -->
     <div class="screen" id="screen4">
         <h1>En toch is er ook zo veel om dankbaar voor te zijn</h1>
-        <div class="gratitude-text">
-            Kijk maar bijvoorbeeld wat Lilou zegt:
-        </div>
-        <div class="quote">"Ik kan vandaag niet lopen, maar ik heb toch de zon op mijn gezicht gevoeld."</div>
+        <div class="gratitude-text" id="childIntro"></div>
+        <div class="quote" id="randomQuote"></div>
+        <div class="child-name" id="childName"></div>
         <div class="gratitude-text">
             Benieuwd waar zij haar positiviteit vandaan haalt en hoe zij haar leven leidt?, druk dan op de link
         </div>
-        <button class="cta-button" onclick="window.open('https://www.zapp.nl/programmas/je-zal-het-maar-hebben-junior/gemist/BV_101410838', '_blank')">Bekijk Lilou's verhaal</button>
+        <button class="cta-button" id="childLink">Bekijk het verhaal</button>
     </div>
 
     <script>
+        const complaints = [
+            "Pfff ik ben vandaag te laat gekomen op werk, weer door een vertraging van de treinen",
+            "Waarom regent het altijd als ik mijn fiets pak?",
+            "De nieuwe koffie die ik probeerde was super vies echt zonde van mijn geld.",
+            "Mijn pakket is alweer niet op tijd bezorgd.",
+            "Die file op de A12 is echt te gek voor woorden.",
+            "Ik heb weer een berg was te doen en totaal geen zin.",
+            "Waarom is het altijd druk in de supermarkt als ik er ben?",
+            "Mijn computer doet raar en ik word hier zo chagrijnig van.",
+            "De trein staat stil en niemand weet hoelang het gaat duren.",
+            "Ik ben mijn OV-kaart weer vergeten, typisch!",
+            "Mijn brood was te droog vandaag die moest ik dus weggooien en ik moest toen geld besteden aan lunch kopen.",
+            "Waarom werkt de wifi nooit?!",
+            "Het regent en mijn jas is helemaal nat. Ik moet nog een dag op kantoor zitten hiermee.",
+            "Mijn telefoon loopt de hele tijd vast, zo frustrerend.",
+            "Ik ben te laat wakker geworden en nu loop ik achter op mijn dag.",
+            "De supermarkt heeft mijn favoriete product niet waarvoor ik speciaal naar de supermarkt ben gegaan.",
+            "Mijn koffie is te slap, het kan nooit goed zijn."
+        ];
+
+        const children = [
+            {
+                name: "Lilou (13)",
+                quote: "Ik kan vandaag niet lopen, maar ik heb toch de zon op mijn gezicht gevoeld.",
+                link: "https://www.zapp.nl/programmas/je-zal-het-maar-hebben-junior/gemist/BV_101410838"
+            },
+            {
+                name: "An-Mei (14)",
+                quote: "Ik zie niet alles, en toch voelde ik vandaag licht en vreugde in mijn omgeving. Ik heb kunnen genieten van kleuren en vormen om me heen.",
+                link: "https://www.zapp.nl/programmas/je-zal-het-maar-hebben-junior/gemist/BV_101412198"
+            },
+            {
+                name: "Jadey (9)",
+                quote: "Mijn gezicht laat mijn emoties niet zien, maar vandaag voelde ik geluk in mijn hart.",
+                link: "https://www.zapp.nl/programmas/je-zal-het-maar-hebben-junior/gemist/BV_101412198"
+            },
+            {
+                name: "Emma (13)",
+                quote: "Mijn gezicht en lichaam zijn anders dan die van anderen, maar dat stopt me niet om te genieten van mijn hobby make-up!",
+                link: "https://www.zapp.nl/programmas/je-zal-het-maar-hebben-junior/gemist/BV_101412202"
+            },
+            {
+                name: "Rocco (12)",
+                quote: "Ik moet extra opletten met mijn lichaam, maar vandaag heb ik vrij en blij kunnen zijn.",
+                link: "https://www.zapp.nl/programmas/je-zal-het-maar-hebben-junior/gemist/BV_101412202"
+            },
+            {
+                name: "Sofie (15)",
+                quote: "Water kan me pijn doen, maar vandaag voelde ik plezier en rust in andere momenten.",
+                link: "https://www.zapp.nl/programmas/je-zal-het-maar-hebben-junior/gemist/BV_101412201"
+            },
+            {
+                name: "Wansh (11)",
+                quote: "Ik moet altijd letten op mijn suiker, maar vandaag voelde ik me vrij in wat ik wilde doen.",
+                link: "https://www.zapp.nl/programmas/je-zal-het-maar-hebben-junior/gemist/BV_101412201"
+            },
+            {
+                name: "Sophia (10)",
+                quote: "Ik moet voorzichtig zijn met prikkels, want mijn lichaam kan onvoorspelbaar zijn. Toch heb ik vandaag gelachen en genoten.",
+                link: "https://www.zapp.nl/programmas/je-zal-het-maar-hebben-junior/gemist/BV_101412200"
+            },
+            {
+                name: "Loran (13)",
+                quote: "Ik kan niet alles fysiek doen, en toch genoot ik van elke beweging die ik wél kon maken.",
+                link: "https://www.zapp.nl/programmas/je-zal-het-maar-hebben-junior/gemist/BV_101412200"
+            },
+            {
+                name: "Lennon (9)",
+                quote: "Het is soms moeilijk om op te vallen omdat mijn gezicht anders is, maar vandaag voelde ik me goed in wie ik ben.",
+                link: "https://www.zapp.nl/programmas/je-zal-het-maar-hebben-junior/gemist/BV_101412199"
+            },
+            {
+                name: "Lieve (14)",
+                quote: "Mijn spieren zijn slapper en ik heb altijd honger, daardoor is het lastig om alles te doen wat ik wil. Vandaag kon ik toch lachen en spelen.",
+                link: "https://www.zapp.nl/programmas/je-zal-het-maar-hebben-junior/gemist/BV_101412199"
+            },
+            {
+                name: "Jasper (13)",
+                quote: "Het geluid in mijn hoofd stopt niet, en toch heb ik kunnen glimlachen vandaag.",
+                link: "https://www.zapp.nl/programmas/je-zal-het-maar-hebben-junior/gemist/BV_101410838"
+            },
+            {
+                name: "Wieke (12)",
+                quote: "Mijn lichaam voelt soms verkeerd, maar toch heb ik vandaag trots kunnen lachen.",
+                link: "https://www.zapp.nl/programmas/je-zal-het-maar-hebben-junior/gemist/BV_101412204"
+            },
+            {
+                name: "Jurre (11)",
+                quote: "Het is niet makkelijk voor mijn handen en voeten, en toch heb ik plezier kunnen maken zoals ik wil.",
+                link: "https://www.zapp.nl/programmas/je-zal-het-maar-hebben-junior/gemist/BV_101412204"
+            },
+            {
+                name: "Sara (9)",
+                quote: "Mijn spieren zijn slapper dan anderen, maar ik heb vandaag kunnen lachen en genieten zoals iedereen.",
+                link: "https://www.zapp.nl/programmas/je-zal-het-maar-hebben-junior/gemist/BV_101412203"
+            },
+            {
+                name: "Ilano (8)",
+                quote: "Ik kan niet zomaar naar buiten in de zon, maar vandaag heb ik toch de warmte van het licht op een veilige manier gevoeld.",
+                link: "https://www.zapp.nl/programmas/je-zal-het-maar-hebben-junior/gemist/BV_101412203"
+            }
+        ];
+
+        let selectedChild;
+
+        function getRandomItem(array) {
+            return array[Math.floor(Math.random() * array.length)];
+        }
+
+        function initializeRandomContent() {
+            // Select random complaint
+            const randomComplaint = getRandomItem(complaints);
+            document.getElementById('randomComplaint').textContent = `"${randomComplaint}"`;
+
+            // Select random child
+            selectedChild = getRandomItem(children);
+            document.getElementById('childIntro').textContent = `Kijk maar bijvoorbeeld wat ${selectedChild.name.split(' ')[0]} zegt:`;
+            document.getElementById('randomQuote').textContent = `"${selectedChild.quote}"`;
+            document.getElementById('childName').textContent = selectedChild.name;
+            
+            // Set up the link
+            const linkButton = document.getElementById('childLink');
+            linkButton.onclick = () => window.open(selectedChild.link, '_blank');
+        }
+
         function submitComplaint() {
             const complaint = document.getElementById('complaintInput').value.trim();
             
@@ -325,6 +517,9 @@
                 alert('Typ eerst iets!');
                 return;
             }
+
+            // Initialize random content
+            initializeRandomContent();
 
             // Show user's complaint in floating screen
             document.getElementById('userComplaint').textContent = `"${complaint}"`;
@@ -339,9 +534,11 @@
         }
 
         function showGratitude() {
-            // Change to rainbow theme
-            document.body.classList.remove('dark');
-            document.body.classList.add('rainbow');
+            // Start gradual transition to rainbow theme
+            setTimeout(() => {
+                document.body.classList.remove('dark');
+                document.body.classList.add('rainbow');
+            }, 200);
             
             showScreen('screen4');
         }
@@ -349,10 +546,23 @@
         function showScreen(screenId) {
             // Hide all screens
             const screens = document.querySelectorAll('.screen');
-            screens.forEach(screen => screen.classList.remove('active'));
+            screens.forEach(screen => {
+                screen.classList.remove('active');
+                // Add small delay for smooth transition
+                setTimeout(() => {
+                    if (screen.id !== screenId) {
+                        screen.style.display = 'none';
+                    }
+                }, 300);
+            });
             
-            // Show target screen
-            document.getElementById(screenId).classList.add('active');
+            // Show target screen with delay for smooth transition
+            setTimeout(() => {
+                document.getElementById(screenId).style.display = 'block';
+                setTimeout(() => {
+                    document.getElementById(screenId).classList.add('active');
+                }, 50);
+            }, 300);
         }
     </script>
 </body>
