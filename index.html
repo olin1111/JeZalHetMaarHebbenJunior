@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Share Your Complaint</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .screen {
+            display: none;
+            text-align: center;
+            max-width: 400px;
+            padding: 40px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .screen.active {
+            display: block;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 30px;
+            font-weight: 300;
+        }
+
+        textarea {
+            width: 100%;
+            height: 120px;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            resize: none;
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+        }
+
+        button {
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background: #ff5252;
+            transform: translateY(-2px);
+        }
+
+        .floating-text {
+            font-size: 18px;
+            opacity: 1;
+            transform: translateY(0);
+            animation: floatAway 3s ease-out forwards;
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+        }
+
+        @keyframes floatAway {
+            0% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+            50% {
+                opacity: 0.7;
+                transform: translateY(-20px) scale(1.1);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-100px) scale(0.8);
+            }
+        }
+
+        .complaint-text {
+            font-size: 18px;
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            font-style: italic;
+        }
+
+        .gratitude-text {
+            font-size: 16px;
+            line-height: 1.6;
+            margin: 20px 0;
+        }
+
+        .quote {
+            font-size: 20px;
+            font-weight: bold;
+            color: #ffd700;
+            margin: 15px 0;
+        }
+
+        .cta-button {
+            background: #4ecdc4;
+            margin-top: 25px;
+        }
+
+        .cta-button:hover {
+            background: #45b7b8;
+        }
+    </style>
+</head>
+<body>
+    <!-- Screen 1: Input -->
+    <div class="screen active" id="screen1">
+        <h1>Type your complaint here</h1>
+        <textarea id="complaintInput" placeholder="What's bothering you right now?"></textarea>
+        <button onclick="submitComplaint()">Send it away</button>
+    </div>
+
+    <!-- Screen 2: Floating away -->
+    <div class="screen" id="screen2">
+        <h1>Your complaint is floating away...</h1>
+        <div class="floating-text" id="userComplaint"></div>
+    </div>
+
+    <!-- Screen 3: Someone else's complaint -->
+    <div class="screen" id="screen3">
+        <h1>Here's what someone else shared</h1>
+        <div class="complaint-text">
+            "I'm so tired of everything being so expensive. I can barely afford groceries anymore and it's making me feel hopeless about the future."
+        </div>
+        <button onclick="showGratitude()">Continue</button>
+    </div>
+
+    <!-- Screen 4: Gratitude message -->
+    <div class="screen" id="screen4">
+        <h1>But there is also so much to be grateful for</h1>
+        <div class="gratitude-text">
+            Look at this quote Rocco said:
+        </div>
+        <div class="quote">"At least you can dance"</div>
+        <div class="gratitude-text">
+            To hear his full story, watch the program
+        </div>
+        <button class="cta-button" onclick="restart()">Watch Program</button>
+        <br>
+        <button onclick="restart()" style="background: rgba(255,255,255,0.3); margin-top: 15px;">Start Over</button>
+    </div>
+
+    <script>
+        function submitComplaint() {
+            const complaint = document.getElementById('complaintInput').value.trim();
+            
+            if (!complaint) {
+                alert('Please type something first!');
+                return;
+            }
+
+            // Show user's complaint in floating screen
+            document.getElementById('userComplaint').textContent = `"${complaint}"`;
+            
+            // Switch to floating screen
+            showScreen('screen2');
+            
+            // After 3 seconds, show other person's complaint
+            setTimeout(() => {
+                showScreen('screen3');
+            }, 3500);
+        }
+
+        function showGratitude() {
+            showScreen('screen4');
+        }
+
+        function restart() {
+            // Clear input
+            document.getElementById('complaintInput').value = '';
+            showScreen('screen1');
+        }
+
+        function showScreen(screenId) {
+            // Hide all screens
+            const screens = document.querySelectorAll('.screen');
+            screens.forEach(screen => screen.classList.remove('active'));
+            
+            // Show target screen
+            document.getElementById(screenId).classList.add('active');
+        }
+    </script>
+</body>
+</html>
